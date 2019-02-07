@@ -3,9 +3,8 @@ require("winston-daily-rotate-file");
 const { combine, timestamp, printf } = format;
 var appRoot = "logFile";
 
-
 const myFormat = printf(({ message, timestamp, level }) => {
- let time = new Date(timestamp).getTime();
+  let time = new Date(timestamp).getTime();
   const obj = {
     time,
     level,
@@ -13,7 +12,7 @@ const myFormat = printf(({ message, timestamp, level }) => {
   };
   return JSON.stringify(obj);
 });
-  const infoTransport = new transports.DailyRotateFile({
+const infoTransport = new transports.DailyRotateFile({
   json: true,
   colorsize: "green",
   level: "info",
@@ -42,7 +41,7 @@ const errorTransport = new transports.DailyRotateFile({
 });
 
 const logger = createLogger({
-   
+
   format: combine(timestamp({ format: "YYYY-MM-DD HH:mm:ss" }), myFormat),
 
   transports: [infoTransport, debugTransport, errorTransport],
